@@ -1,0 +1,27 @@
+body{
+	margin: 0px;
+	background-color: #000;
+}
+
+header{
+	background-color: #f60;
+	color:#fff;
+}
+
+#pageTitle{
+	margin: 0px;
+	text-align:center;
+	padding: 10px;
+}
+
+#userInputDiv{
+	text-align: center;
+	padding:10px;
+	height: 500px;
+	background-color: #fff;
+}
+
+#inputContent{
+	padding: 160px;
+	font-size: 16px
+}
