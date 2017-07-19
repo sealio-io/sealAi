@@ -7,6 +7,11 @@ myApp.config(function($stateProvider,$urlRouterProvider) {
         templateUrl: './templates/home.html'
     })
 
+    $stateProvider.state('trafficHistory',{
+    	url:'/trafficHistory',
+    	templateUrl:'../templates/trafficHistory.html'
+    })
+
 });
 
 var date = new Date();
@@ -152,8 +157,8 @@ function send() {
 
 				var userLog = {
 					"name":userName,
-					"trafficQuery":trafficQuery,
-					"time":userDate
+					"traffic":trafficQuery,
+					"date":userDate
 				}
 
 				console.log(userLog);
@@ -172,6 +177,14 @@ function setResponse(val) {
 	$("#response").text(val);
 }
 });
+
+}]);
+
+myApp.controller('trafficHistory', ['$scope','$http', function($scope, $http){
+
+	$http.get('http://localhost:8080/users').then(function(data) {
+		$scope.users = data.data;
+	})
 
 }]);
 

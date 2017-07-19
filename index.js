@@ -48,24 +48,46 @@ MongoClient.connect(url, function(err, db) {
     }
 });
 
+var userList = [];
+
 app.post('/home', jsonParser,function(req,res){
 
 	var user = new User();
 	user.name = req.body.name;
 	user.traffic = req.body.traffic;
-  user.date = req.body.date;
-	console.log(user);
+	user.date = req.body.date;
+	//  console.log(req.body);
+	user.save(function(err){
+		
+		if(err){
+		console.log(err);
+		}else{
+		console.log(user);
+		}
 
-  user.save(function(err){
-    if(err){
-        console.log(err);
-    }else{
-        console.log(user);
-    }
-
-  });
+	});
 
 });
+
+app.get('/users',function(req,res){
+	User.find({})
+	.exec(function(err,users){
+
+		if(err){
+			res.send('error has occured');
+		}else{
+			res.json(users);
+			console.log(users)
+		}
+
+	});
+})
+
+// app.get('/users', function(req,response){
+//     User.find({}, { name: true }, function(err, users) {
+//         response.json(users);
+//     });
+// });
 
 //Schema
 // var userSchema = new mongoose.Schema({

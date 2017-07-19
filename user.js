@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
 	name:{type: String},
 	traffic:{type: String},
-	date:{type:Number}
+	date:{type: String}
 
 });
 
