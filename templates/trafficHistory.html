@@ -4,10 +4,10 @@
 	</header>
 	
 	<section class="contentDiv">
-		<button ui-sref="home" type="button" class="btn btn-info">Home</button>
+		<button id="homeButton" ui-sref="home" type="button" class="btn btn-info">Home</button>
 		<br/><br/>
 		<div ng-repeat="user in users">
-		<p>{{user.name}} {{user.traffic}} {{user.date}}</p>
+		<p>{{user.name}} {{user.traffic}} {{user.date}} {{user.time}}</p>
 		</div>
 		
 	</section>

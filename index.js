@@ -56,6 +56,7 @@ app.post('/home', jsonParser,function(req,res){
 	user.name = req.body.name;
 	user.traffic = req.body.traffic;
 	user.date = req.body.date;
+	user.time = req.body.time;
 	//  console.log(req.body);
 	user.save(function(err){
 		

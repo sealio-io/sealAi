@@ -14,33 +14,76 @@ myApp.config(function($stateProvider,$urlRouterProvider) {
 
 });
 
+//Global Vars
+var aiListen = true;
+
+// Creates Date
 var date = new Date();
 var month = date.getMonth() + 1;
 var year = date.getFullYear();
 var day = date.getDate();
 var userDate = month+"-"+day+"-"+year;
 
-myApp.controller('voiceRec', ['$scope','$http', function($scope, $http) {
+//Creates Time
+var hour = date.getHours();
+var meridian;
 
+if(hour <= 12){
+	meridian = "AM";
+}else{
+	meridian = "PM";
+	hour = hour-12;
+}
+
+
+console.log(meridian);
+var minutes = date.getMinutes();
+var userTime = hour+":"+minutes+" "+meridian;
+console.log(userTime)
+
+myApp.controller('voiceRec', ['$scope','$http','$rootScope', function($scope, $http,$rootScope) {
 
 //Recog JS
 var accessToken = "b246508062dc444f8699e0a18046b639";
 var baseUrl = "https://api.api.ai/v1/";
 
 $(document).ready(function() {
-
+	
 	var recButton = document.getElementById('rec');
 	var pentSec;
 	pentSec++;
 	displayGo = false;
+	//var homeButton = document.getElementById('homeButton');
+	var viewLogButton = document.getElementById('viewLogButton');
 
-	setInterval(function(){
+	viewLogButton.onclick = function(){
+		aiListen = false;
+		alert('aiListen = ' + aiListen);
+	}
 
-		switchRecognition();
-		console.log(pentSec + 5, "- seconds");
+	// homeButton.onclick = function(){
+	// 	aiListen = true;
+	// }
+
+	if (aiListen = true){
+		setInterval(function(){
+
+			switchRecognition();
+			console.log(pentSec + 5, "- seconds");
 
 
-	}, 7000);
+		}, 7000);
+
+		setInterval(function(){
+
+			var reminderResponse = new SpeechSynthesisUtterance('Speak Now');
+			window.speechSynthesis.speak(reminderResponse);
+
+
+		}, 6700);
+	}else{
+		console.log("quite");
+	}
 
 var recognition;
 var userInput;
@@ -151,14 +194,17 @@ function send() {
 				var nameLog =document.getElementById('nameLog');
 				var trafficLog =document.getElementById('trafficLog');
 				var dateLog = document.getElementById('dateLog');
+				var timeLog = document.getElementById('timeLog');
 				dateLog.value = userDate;
 				nameLog.value = userName;
 				trafficLog.value = trafficQuery;
+				timeLog.value = userTime;
 
 				var userLog = {
 					"name":userName,
 					"traffic":trafficQuery,
-					"date":userDate
+					"date":userDate,
+					"time":userTime
 				}
 
 				console.log(userLog);
@@ -180,7 +226,14 @@ function setResponse(val) {
 
 }]);
 
-myApp.controller('trafficHistory', ['$scope','$http', function($scope, $http){
+myApp.controller('trafficHistory', ['$scope','$http','$rootScope', function($scope, $http,$rootScope){
+
+	var homeButton = document.getElementById('homeButton');
+
+	homeButton.onclick = function(){
+		aiListen = true;
+		alert('aiListen = ' + aiListen);
+	}
 
 	$http.get('http://localhost:8080/users').then(function(data) {
 		$scope.users = data.data;
