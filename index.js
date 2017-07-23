@@ -12,7 +12,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-var url = 'mongodb://localhost:27017/sealDB';
+var url = 'mongodb://admin:admin@ds119223.mlab.com:19223/cube-traffic';
 // Imports
 // var myModule = require('./js/voice-rec');
 // var userName = myModule.userName;
