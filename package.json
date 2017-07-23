@@ -4,10 +4,7 @@
   "description": "an application that uses voice recognition to log people into the cube",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
-  },
-  "engines":{
-    "node":"8.1.3"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
