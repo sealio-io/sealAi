@@ -48,8 +48,6 @@ MongoClient.connect(url, function(err, db) {
     }
 });
 
-var userList = [];
-
 app.post('/home', jsonParser,function(req,res){
 
 	var user = new User();

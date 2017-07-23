@@ -33,11 +33,17 @@ if(hour <= 12){
 }else{
 	meridian = "PM";
 	hour = hour-12;
+	if(hour == 0){
+		hour = hour + 1;
+	}
 }
 
 
 console.log(meridian);
 var minutes = date.getMinutes();
+if (minutes>10){
+	minutes = minutes + 1;
+}
 var userTime = hour+":"+minutes+" "+meridian;
 console.log(userTime)
 
@@ -64,8 +70,7 @@ $(document).ready(function() {
 	// homeButton.onclick = function(){
 	// 	aiListen = true;
 	// }
-
-	if (aiListen = true){
+	if(respText === "Hey Duck"){
 		setInterval(function(){
 
 			switchRecognition();
@@ -81,9 +86,6 @@ $(document).ready(function() {
 
 
 		}, 6700);
-	}else{
-		console.log("quite");
-	}
 
 var recognition;
 var userInput;
@@ -222,7 +224,9 @@ function send() {
 function setResponse(val) {
 	$("#response").text(val);
 }
+}
 });
+
 
 }]);
 
