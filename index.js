@@ -98,7 +98,7 @@ app.get('/users',function(req,res){
 // Middle Ware
 
 //Sets port
-var port = 8080;
+var port = 8080 || process.env.PORT;
 app.listen(port, () => console.log("listening on  " + port));
 // var User = mongoose.model("User", userSchema);
 
