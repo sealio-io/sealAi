@@ -67,10 +67,14 @@ $(document).ready(function() {
 		alert('aiListen = ' + aiListen);
 	}
 
+	// Listens 24/7
+	var text = "";
+
+
 	// homeButton.onclick = function(){
 	// 	aiListen = true;
 	// }
-	if(aiListen){
+	
 		setInterval(function(){
 
 			switchRecognition();
@@ -79,13 +83,15 @@ $(document).ready(function() {
 
 		}, 7000);
 
-		setInterval(function(){
+		if(text === "hey duck" || "Hey Duck" || "hello duck" || "Hello Duck"){
+			setInterval(function(){
 
-			var reminderResponse = new SpeechSynthesisUtterance('Speak Now');
-			window.speechSynthesis.speak(reminderResponse);
+				var reminderResponse = new SpeechSynthesisUtterance('Speak Now');
+				window.speechSynthesis.speak(reminderResponse);
 
 
-		}, 6620);
+			}, 6620);
+		}
 
 var recognition;
 var userInput;
@@ -179,15 +185,15 @@ function send() {
 			// console.log("name var =" ,name);
 			//Pop leave or entering
 			var trafficQuery;
-			if(userInput === "leaving"){
+			if(userInput === "leaving" || "now leaving"){
 
-				trafficQuery = "leaving"
+				trafficQuery = "leaving";
 				aiListen = false;
 
 
-			}else if(userInput === "entering"){
+			}else if(userInput === "entering" || "now entering"){
 
-				trafficQuery = "entering"
+				trafficQuery = "entering";
 				aiListen = false;
 
 			}
@@ -227,7 +233,7 @@ function send() {
 function setResponse(val) {
 	$("#response").text(val);
 }
-}
+
 });
 
 
