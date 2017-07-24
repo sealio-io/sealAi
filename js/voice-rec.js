@@ -41,8 +41,8 @@ if(hour <= 12){
 
 console.log(meridian);
 var minutes = date.getMinutes();
-if (minutes>10){
-	minutes = minutes + 1;
+if (minutes<10){
+	minutes = "0" + minutes;
 }
 var userTime = hour+":"+minutes+" "+meridian;
 console.log(userTime)
@@ -52,7 +52,7 @@ myApp.controller('voiceRec', ['$scope','$http','$rootScope', function($scope, $h
 //Recog JS
 var accessToken = "b246508062dc444f8699e0a18046b639";
 var baseUrl = "https://api.api.ai/v1/";
-
+var respText;
 $(document).ready(function() {
 	
 	var recButton = document.getElementById('rec');
@@ -70,7 +70,7 @@ $(document).ready(function() {
 	// homeButton.onclick = function(){
 	// 	aiListen = true;
 	// }
-	if(respText === "Hey Duck"){
+	if(aiListen){
 		setInterval(function(){
 
 			switchRecognition();
@@ -85,7 +85,7 @@ $(document).ready(function() {
 			window.speechSynthesis.speak(reminderResponse);
 
 
-		}, 6700);
+		}, 6620);
 
 var recognition;
 var userInput;
@@ -170,6 +170,7 @@ function send() {
 			console.log(respText);
 			setResponse(respText);
 			var userResponse = new SpeechSynthesisUtterance(respText);
+			userResponse.lang='en-GR';
 			window.speechSynthesis.speak(userResponse);
 			console.log("user input =",userInput);
 			//Pop Name
@@ -181,11 +182,13 @@ function send() {
 			if(userInput === "leaving"){
 
 				trafficQuery = "leaving"
+				aiListen = false;
 
 
 			}else if(userInput === "entering"){
 
 				trafficQuery = "entering"
+				aiListen = false;
 
 			}
 
