@@ -16,7 +16,6 @@ myApp.config(function($stateProvider,$urlRouterProvider) {
 
 //Global Vars
 var aiListen = true;
-
 // Creates Date
 var date = new Date();
 var month = date.getMonth() + 1;
@@ -38,15 +37,13 @@ if(hour <= 12){
 	}
 }
 
-
-console.log(meridian);
 var minutes = date.getMinutes();
 if (minutes<10){
 	minutes = "0" + minutes;
 }
 var userTime = hour+":"+minutes+" "+meridian;
 console.log(userTime)
-
+var duckActivate = false;
 myApp.controller('voiceRec', ['$scope','$http','$rootScope', function($scope, $http,$rootScope) {
 
 //Recog JS
@@ -60,38 +57,25 @@ $(document).ready(function() {
 	pentSec++;
 	displayGo = false;
 	//var homeButton = document.getElementById('homeButton');
-	var viewLogButton = document.getElementById('viewLogButton');
-
-	viewLogButton.onclick = function(){
-		aiListen = false;
-		alert('aiListen = ' + aiListen);
-	}
-
-	// Listens 24/7
-	var text = "";
-
-
 	// homeButton.onclick = function(){
 	// 	aiListen = true;
 	// }
-	
 		setInterval(function(){
 
 			switchRecognition();
 			console.log(pentSec + 5, "- seconds");
 
-
-		}, 7000);
-
-		if(text === "hey duck" || "Hey Duck" || "hello duck" || "Hello Duck"){
-			setInterval(function(){
+			if(duckActivate == true){
+				setInterval(function(){
 
 				var reminderResponse = new SpeechSynthesisUtterance('Speak Now');
 				window.speechSynthesis.speak(reminderResponse);
 
+				}, 8600);
+			}
 
-			}, 6620);
-		}
+
+		}, 9000);
 
 var recognition;
 var userInput;
@@ -101,11 +85,24 @@ function startRecognition() {
 	recognition.onstart = function(event) {
 		updateRec();
 	};
+	var text = "";
 	recognition.onresult = function(event) {
-		var text = "";
 	    for (var i = event.resultIndex; i < event.results.length; ++i) {
 	    	text += event.results[i][0].transcript;
 	    }
+
+	    // MAYBE HERE IS WHERE U WANT TO CHECK THE VARIABLE TEXT TO MATCH
+	    // A PARTICULAR STATE. DEPENDING ON WHAT THAT STATE IS, U CAN USE THE PROPER
+	    // SET INPUT WHICH WOULD CALL ITS OWN SEND FUNCTION TO THE API, U SHOULD
+	    // ALSO MAKE DIFFERENT TEXT VARIABLES FOR POSSIBLE STRINGS LIKE HEY DUCK,
+	    // NAME, ENTERING/LEAVING, SO U CAN CALL THE PROPER CUSTOM METHODS. U WOULD
+	    // HAVE TO LOOP THROUGH THIS FUNCTION UNTIL U GET A PROPER RESPONSE. BUT 
+	    // PRIORITY IS DETECTING HEY DUCK IN THE BEGINNING. 
+	    if (text === "Hey Duck"){
+	    	console.log("text = "+text);
+			duckActivate = true;
+			console.log("duckactivate = "+duckActivate);
+		}
 	    setInput(text);
 	    userInput = text;
 
@@ -120,12 +117,6 @@ function startRecognition() {
 	};
 	recognition.lang = "en-US";
 	recognition.start();
-}
-
-
-//Parses user's name
-function parseName(){
-
 }
 
 function stopRecognition() {
@@ -147,8 +138,15 @@ function switchRecognition() {
 }
 
 function setInput(text) {
+	// if text == hey duck then run the send function
+	
 	$("#input").val(text);
+
+	// if (duckActivate)
+	if (duckActivate == true){
 	send();
+	}
+
 }
 
 function updateRec() {
@@ -174,6 +172,11 @@ function send() {
 			}	
 			console.log("username =",userName);
 			console.log(respText);
+			//sets value too cancels the "SPEAK NOW" interval
+			if(respText === "thank you"){
+				duckActivate = false;
+				console.log("duckActivate = "+duckActivate);
+			}
 			setResponse(respText);
 			var userResponse = new SpeechSynthesisUtterance(respText);
 			userResponse.lang='en-GR';
@@ -234,8 +237,15 @@ function setResponse(val) {
 	$("#response").text(val);
 }
 
-});
+// Init Conversation
 
+
+	
+
+
+
+});
+// Listens 24/7
 
 }]);
 
