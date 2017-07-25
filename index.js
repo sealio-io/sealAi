@@ -99,6 +99,6 @@ app.get('/users',function(req,res){
 
 //Sets port
 var port = process.env.PORT || 8080;
-app.listen(process.env.PORT, () => console.log("listening on  " + port));
+app.listen(port, () => console.log("listening on  " + port));
 // var User = mongoose.model("User", userSchema);
 

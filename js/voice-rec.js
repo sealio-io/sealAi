@@ -65,27 +65,21 @@ $(document).ready(function() {
 			switchRecognition();
 			console.log(pentSec + 5, "- seconds");
 
-			if(duckActivate == true){
-				setInterval(function(){
 
-				var reminderResponse = new SpeechSynthesisUtterance('Speak Now');
-				window.speechSynthesis.speak(reminderResponse);
-
-				}, 8600);
-			}
-
-
-		}, 9000);
+		}, 6000);
 
 var recognition;
 var userInput;
 function startRecognition() {
-	//recognition = new webkitSpeechRecognition();
+
 	recognition = new webkitSpeechRecognition();
+	//Listening (capturing voice from audio input) started.
+    //This is a good place to give the user visual feedback about that (i.e. flash a red light, etc.)
 	recognition.onstart = function(event) {
 		updateRec();
 	};
 	var text = "";
+	//the event holds the results
 	recognition.onresult = function(event) {
 	    for (var i = event.resultIndex; i < event.results.length; ++i) {
 	    	text += event.results[i][0].transcript;
@@ -152,6 +146,7 @@ function setInput(text) {
 function updateRec() {
 	$("#rec").text(recognition ? "Stop" : "Speak");
 }
+
 var userName ;
 function send() {
 	var text = $("#input").val();
