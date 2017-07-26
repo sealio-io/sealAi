@@ -41,8 +41,9 @@ var minutes = date.getMinutes();
 if (minutes<10){
 	minutes = "0" + minutes;
 }
+
 var userTime = hour+":"+minutes+" "+meridian;
-console.log(userTime)
+console.log(userTime);
 var duckActivate = false;
 myApp.controller('voiceRec', ['$scope','$http','$rootScope', function($scope, $http,$rootScope) {
 
@@ -60,13 +61,9 @@ $(document).ready(function() {
 	// homeButton.onclick = function(){
 	// 	aiListen = true;
 	// }
-		setInterval(function(){
-
+	setInterval(function(){
 			switchRecognition();
-			console.log(pentSec + 5, "- seconds");
-
-
-		}, 6000);
+	}, 1000);
 
 var recognition;
 var userInput;
@@ -83,6 +80,12 @@ function startRecognition() {
 	recognition.onresult = function(event) {
 	    for (var i = event.resultIndex; i < event.results.length; ++i) {
 	    	text += event.results[i][0].transcript;
+			if (text === "Hey Duck"){
+				console.log("CHECK");
+				//duckActivate = true;
+				//console.log("duckactivate = "+duckActivate);
+			}
+
 	    }
 
 	    // MAYBE HERE IS WHERE U WANT TO CHECK THE VARIABLE TEXT TO MATCH
@@ -92,18 +95,26 @@ function startRecognition() {
 	    // NAME, ENTERING/LEAVING, SO U CAN CALL THE PROPER CUSTOM METHODS. U WOULD
 	    // HAVE TO LOOP THROUGH THIS FUNCTION UNTIL U GET A PROPER RESPONSE. BUT 
 	    // PRIORITY IS DETECTING HEY DUCK IN THE BEGINNING. 
-	    if (text === "Hey Duck"){
+	    var initDuck1 = text.includes("Hey Duck");
+	    var initDuck2 = text.includes("hey duck");
+	    if (initDuck1 == true){
 	    	console.log("text = "+text);
 			duckActivate = true;
 			console.log("duckactivate = "+duckActivate);
+		}else if (initDuck2 == true){
+			console.log("text = "+text);
+			duckActivate = true;
+			console.log("duckactivate = "+duckActivate);
 		}
+
+
 	    setInput(text);
 	    userInput = text;
 
 	    console.log(text);
 
 	    // parseName();
-		stopRecognition();
+		//stopRecognition();
 	};
 
 	recognition.onend = function() {
@@ -124,7 +135,7 @@ function stopRecognition() {
 function switchRecognition() {
 	if (recognition) {
 		console.log("listening");
-		stopRecognition();
+		//stopRecognition();
 	} else {
 		console.log('Speak Now');
 		startRecognition();
@@ -138,7 +149,7 @@ function setInput(text) {
 
 	// if (duckActivate)
 	if (duckActivate == true){
-	send();
+		send();
 	}
 
 }
@@ -167,33 +178,42 @@ function send() {
 			}	
 			console.log("username =",userName);
 			console.log(respText);
+			//sets delay for name query
+			if(respText === "Hello, what's your name?"){
+				stopRecognition();
+
+			}
 			//sets value too cancels the "SPEAK NOW" interval
 			if(respText === "thank you"){
 				duckActivate = false;
 				console.log("duckActivate = "+duckActivate);
 			}
 			setResponse(respText);
-			var userResponse = new SpeechSynthesisUtterance(respText);
-			userResponse.lang='en-GR';
-			window.speechSynthesis.speak(userResponse);
+			var duckResponse = new SpeechSynthesisUtterance(respText);
+			duckResponse.lang='en-GR';
+			window.speechSynthesis.speak(duckResponse);
 			console.log("user input =",userInput);
 			//Pop Name
 			// var userIntro = "name is" || "i am";
 			// var name = userName.split(userIntro).pop();
 			// console.log("name var =" ,name);
 			//Pop leave or entering
-			var trafficQuery;
-			if(userInput === "leaving" || "now leaving"){
+    		var userLeaving = userInput.includes("leaving");
+    		var userEntering = userInput.includes("entering");
 
+			var trafficQuery;
+			if(userLeaving == true){
 				trafficQuery = "leaving";
 				aiListen = false;
 
 
-			}else if(userInput === "entering" || "now entering"){
+			}else if(userEntering == true){
 
 				trafficQuery = "entering";
 				aiListen = false;
 
+			}else{
+				trafficQuery = null;
 			}
 
 			console.log("trafficQuery",trafficQuery);
