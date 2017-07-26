@@ -273,7 +273,7 @@ myApp.controller('trafficHistory', ['$scope','$http','$rootScope', function($sco
 		alert('aiListen = ' + aiListen);
 	}
 
-	$http.get('http://localhost:8080/users').then(function(data) {
+	$http.get('/users').then(function(data) {
 		$scope.users = data.data;
 	})
 
