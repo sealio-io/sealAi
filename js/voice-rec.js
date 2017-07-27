@@ -99,6 +99,10 @@ function startRecognition() {
 	    var initDuck2 = text.includes("hey duck");
 	    var initDuck3 = text.includes("a duck");
 	    var initDuck4 = text.includes("heyduck");
+	    var initDuck5 = text.includes("hajduck");
+	    var initDuck6 = text.includes("Hey Doug");
+	    var initDuck7 = text.includes("Haida");
+	    var initDuck8 = text.includes("hey Doug");
 
 	    if (initDuck1 == true){
 	    	console.log("text = "+text);
@@ -116,8 +120,23 @@ function startRecognition() {
 			console.log("text = "+text);
 			duckActivate = true;
 			console.log("duckactivate = "+duckActivate);
+		}else if (initDuck5 == true){
+			console.log("text = "+text);
+			duckActivate = true;
+			console.log("duckactivate = "+duckActivate);
+		}else if(initDuck6 == true){
+			console.log("text = "+text);
+			duckActivate = true;
+			console.log("duckactivate = "+duckActivate);	
+		}else if(initDuck7 == true){
+			console.log("text = "+text);
+			duckActivate = true;
+			console.log("duckactivate = "+duckActivate);	
+		}else if(initDuck8 == true){
+			console.log("text = "+text);
+			duckActivate = true;
+			console.log("duckactivate = "+duckActivate);	
 		}
-
 
 	    setInput(text);
 	    userInput = text;
@@ -195,9 +214,11 @@ function send() {
 
 			}
 			//sets value too cancels the "SPEAK NOW" interval
-			if(respText === "thank you"){
-				duckActivate = false;
-				console.log("duckActivate = "+duckActivate);
+			if (duckActivate == true){
+				if(respText === "thank you"){
+					duckActivate = false;
+					console.log("duckActivate = "+duckActivate);
+				}
 			}
 			setResponse(respText);
 			var duckResponse = new SpeechSynthesisUtterance(respText);
@@ -211,24 +232,80 @@ function send() {
 			//Pop leave or entering
     		var userLeaving = userInput.includes("leaving");
     		var userEntering = userInput.includes("entering");
-
+    		var duckTrafficQuery = userInput.includes("entering or leaving");
+    		var answeringQuery = userInput.includes("answering");
 			var trafficQuery;
-			if(userLeaving == true){
-				trafficQuery = "leaving";
-				aiListen = false;
-
-
+			var trafficQueryFinal;
+			
+			if (userInput === "are you entering or leaving?"){
+				trafficQueryFinal = "are you entering or leaving?"
+			}
+			else if(userInput === "entering or leaving"){
+				trafficQueryFinal = "entering or leaving";
+			}
+			else if(userInput === "I am answering"){
+				trafficQueryFinal = "entering";
+			}
+			else if (userInput === "hello are you entering or leaving I'm entering"){
+				trafficQueryFinal = "entering";
+			}
+			else if (userInput === "hello are you entering or leaving I'm leaving"){
+				trafficQueryFinal = "leaving";
+			}
+			else if(answeringQuery == true){
+				trafficQueryFinal = "entering";
+			}
+			else if(userInput === "you entering or leaving entering"){
+				trafficQueryFinal = "entering";
+			}
+			else if(userInput === "you entering or leaving leaving"){
+				trafficQueryFinal = "leaving";
+			}
+			else if(userInput === "are you entering or leaving entering"){
+				trafficQueryFinal = "entering";
+			}
+			else if (userInput === "are you entering or leaving leaving"){
+				trafficQueryFinal = "leaving";
+			}
+			else if(duckTrafficQuery == true){
+				trafficQueryFinal = "entering or leaving";
+			}
+			else if(userInput === "you entering or leaving"){
+				trafficQueryFinal = "you entering or leaving";
+			}
+			else if(userLeaving == true){
+				trafficQueryFinal = "leaving"
+				// trafficQuery = "leaving";
+				// aiListen = false;
 			}else if(userEntering == true){
+				trafficQueryFinal = "entering";
+				// trafficQuery = "entering";
+				// aiListen = false;xw
+			}
 
-				trafficQuery = "entering";
-				aiListen = false;
+			switch(trafficQueryFinal){
+				case "are you entering or leaving?":
 
-			}else{
-				trafficQuery = null;
+				case "entering or leaving":
+
+				case "you entering or leaving":
+
+				case "leaving":
+					trafficQuery = "leaving";
+					aiListen = false;
+				break;
+
+				case "entering":
+					trafficQuery = "entering";
+					aiListen = false;
+				break;
+
+				default:
+					console.log("NO CASE FOUND")
+
 			}
 
 			console.log("trafficQuery",trafficQuery);
-
 
 			if(respText==="thank you"){
 				var nameLog =document.getElementById('nameLog');
