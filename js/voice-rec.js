@@ -97,11 +97,22 @@ function startRecognition() {
 	    // PRIORITY IS DETECTING HEY DUCK IN THE BEGINNING. 
 	    var initDuck1 = text.includes("Hey Duck");
 	    var initDuck2 = text.includes("hey duck");
+	    var initDuck3 = text.includes("a duck");
+	    var initDuck4 = text.includes("heyduck");
+
 	    if (initDuck1 == true){
 	    	console.log("text = "+text);
 			duckActivate = true;
 			console.log("duckactivate = "+duckActivate);
 		}else if (initDuck2 == true){
+			console.log("text = "+text);
+			duckActivate = true;
+			console.log("duckactivate = "+duckActivate);
+		}else if (initDuck3 == true){
+			console.log("text = "+text);
+			duckActivate = true;
+			console.log("duckactivate = "+duckActivate);
+		}else if (initDuck4 == true){
 			console.log("text = "+text);
 			duckActivate = true;
 			console.log("duckactivate = "+duckActivate);
