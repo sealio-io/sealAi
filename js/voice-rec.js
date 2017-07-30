@@ -1,21 +1,22 @@
 var myApp = angular.module('myApp',['ui.router']);
 
 myApp.config(function($stateProvider,$urlRouterProvider) {
-    $urlRouterProvider.otherwise('/home');
- 	$stateProvider.state('home', {
-        url: "/home",
-        templateUrl: './templates/home.html'
-    })
+	$urlRouterProvider.otherwise('/home');
+	$stateProvider.state('home', {
+		url: "/home",
+		templateUrl: './templates/home.html'
+	})
 
-    $stateProvider.state('trafficHistory',{
-    	url:'/trafficHistory',
-    	templateUrl:'../templates/trafficHistory.html'
-    })
+	$stateProvider.state('trafficHistory',{
+		url:'/trafficHistory',
+		templateUrl:'../templates/trafficHistory.html'
+	})
 
 });
 
 //Global Vars
 var aiListen = true;
+var nameStage = false;
 // Creates Date
 var date = new Date();
 var month = date.getMonth() + 1;
@@ -48,7 +49,7 @@ var duckActivate = false;
 myApp.controller('voiceRec', ['$scope','$http','$rootScope', function($scope, $http,$rootScope) {
 
 //Recog JS
-var accessToken = "b246508062dc444f8699e0a18046b639";
+var accessToken = "f68b9ecf076c424698d53089f90413ff";
 var baseUrl = "https://api.api.ai/v1/";
 var respText;
 $(document).ready(function() {
@@ -62,31 +63,31 @@ $(document).ready(function() {
 	// 	aiListen = true;
 	// }
 	setInterval(function(){
-			switchRecognition();
+		switchRecognition();
 	}, 1000);
 
-var recognition;
-var userInput;
-function startRecognition() {
+	var recognition;
+	var userInput;
+	function startRecognition() {
 
-	recognition = new webkitSpeechRecognition();
+		recognition = new webkitSpeechRecognition();
 	//Listening (capturing voice from audio input) started.
     //This is a good place to give the user visual feedback about that (i.e. flash a red light, etc.)
-	recognition.onstart = function(event) {
-		updateRec();
-	};
-	var text = "";
+    recognition.onstart = function(event) {
+    	updateRec();
+    };
+    var text = "";
 	//the event holds the results
 	recognition.onresult = function(event) {
-	    for (var i = event.resultIndex; i < event.results.length; ++i) {
-	    	text += event.results[i][0].transcript;
+		for (var i = event.resultIndex; i < event.results.length; ++i) {
+			text += event.results[i][0].transcript;
 			if (text === "Hey Duck"){
 				console.log("CHECK");
 				//duckActivate = true;
 				//console.log("duckactivate = "+duckActivate);
 			}
 
-	    }
+		}
 
 	    // MAYBE HERE IS WHERE U WANT TO CHECK THE VARIABLE TEXT TO MATCH
 	    // A PARTICULAR STATE. DEPENDING ON WHAT THAT STATE IS, U CAN USE THE PROPER
@@ -101,42 +102,52 @@ function startRecognition() {
 	    var initDuck4 = text.includes("heyduck");
 	    var initDuck5 = text.includes("hajduck");
 	    var initDuck6 = text.includes("Hey Doug");
-	    var initDuck7 = text.includes("Haida");
 	    var initDuck8 = text.includes("hey Doug");
+	    var initDuck9 = text.includes("hey Doc");
+	    var initDuck10 = text.includes("haydock");
+	    var initDuck11 = text.includes("hey dukh");
 
 	    if (initDuck1 == true){
 	    	console.log("text = "+text);
-			duckActivate = true;
-			console.log("duckactivate = "+duckActivate);
-		}else if (initDuck2 == true){
-			console.log("text = "+text);
-			duckActivate = true;
-			console.log("duckactivate = "+duckActivate);
-		}else if (initDuck3 == true){
-			console.log("text = "+text);
-			duckActivate = true;
-			console.log("duckactivate = "+duckActivate);
-		}else if (initDuck4 == true){
-			console.log("text = "+text);
-			duckActivate = true;
-			console.log("duckactivate = "+duckActivate);
-		}else if (initDuck5 == true){
-			console.log("text = "+text);
-			duckActivate = true;
-			console.log("duckactivate = "+duckActivate);
-		}else if(initDuck6 == true){
-			console.log("text = "+text);
-			duckActivate = true;
-			console.log("duckactivate = "+duckActivate);	
-		}else if(initDuck7 == true){
-			console.log("text = "+text);
-			duckActivate = true;
-			console.log("duckactivate = "+duckActivate);	
-		}else if(initDuck8 == true){
-			console.log("text = "+text);
-			duckActivate = true;
-			console.log("duckactivate = "+duckActivate);	
-		}
+	    	duckActivate = true;
+	    	console.log("duckactivate = "+duckActivate);
+	    }else if (initDuck2 == true){
+	    	console.log("text = "+text);
+	    	duckActivate = true;
+	    	console.log("duckactivate = "+duckActivate);
+	    }else if (initDuck3 == true){
+	    	console.log("text = "+text);
+	    	duckActivate = true;
+	    	console.log("duckactivate = "+duckActivate);
+	    }else if (initDuck4 == true){
+	    	console.log("text = "+text);
+	    	duckActivate = true;
+	    	console.log("duckactivate = "+duckActivate);
+	    }else if (initDuck5 == true){
+	    	console.log("text = "+text);
+	    	duckActivate = true;
+	    	console.log("duckactivate = "+duckActivate);
+	    }else if(initDuck6 == true){
+	    	console.log("text = "+text);
+	    	duckActivate = true;
+	    	console.log("duckactivate = "+duckActivate);	
+	    }else if(initDuck8 == true){
+	    	console.log("text = "+text);
+	    	duckActivate = true;
+	    	console.log("duckactivate = "+duckActivate);	
+	    }else if(initDuck9 == true){
+	    	console.log("text = "+text);
+	    	duckActivate = true;
+	    	console.log("duckactivate = "+duckActivate);	
+	    }else if(initDuck10 == true){
+	    	console.log("text = "+text);
+	    	duckActivate = true;
+	    	console.log("duckactivate = "+duckActivate);	    	
+	    }else if(initDuck11 == true){
+	    	console.log("text = "+text);
+	    	duckActivate = true;
+	    	console.log("duckactivate = "+duckActivate);	    	
+	    }
 
 	    setInput(text);
 	    userInput = text;
@@ -204,7 +215,7 @@ function send() {
 			console.log(data.result);
 			var respText = data.result.fulfillment.speech;
 			if (data.result.parameters.name !== null){
-			 userName = data.result.parameters.name;
+				userName = data.result.parameters.name;
 			}	
 			console.log("username =",userName);
 			console.log(respText);
@@ -225,34 +236,31 @@ function send() {
 			duckResponse.lang='en-GR';
 			window.speechSynthesis.speak(duckResponse);
 			console.log("user input =",userInput);
+			
 			//Pop Name
 			// var userIntro = "name is" || "i am";
 			// var name = userName.split(userIntro).pop();
 			// console.log("name var =" ,name);
 			//Pop leave or entering
-    		var userLeaving = userInput.includes("leaving");
-    		var userEntering = userInput.includes("entering");
-    		var duckTrafficQuery = userInput.includes("entering or leaving");
-    		var answeringQuery = userInput.includes("answering");
+			
+			var userLeaving = userInput.includes("leaving");
+			var userEntering = userInput.includes("entering");
+			var duckTrafficQuery = userInput.includes("entering or leaving");
+			var answeringQuery = userInput.includes("answering");
 			var trafficQuery;
 			var trafficQueryFinal;
 			
-			if (userInput === "are you entering or leaving?"){
-				trafficQueryFinal = "are you entering or leaving?"
+			// May be the cause for latency issues
+			if (userInput.includes("I'm entering")){
+				trafficQueryFinal = "entering";
 			}
-			else if(userInput === "entering or leaving"){
+			else if (userInput.includes("I'm leaving")){
+				trafficQueryFinal = "leaving";
+			}
+			else if(userInput.includes("entering or leaving")){
 				trafficQueryFinal = "entering or leaving";
 			}
 			else if(userInput === "I am answering"){
-				trafficQueryFinal = "entering";
-			}
-			else if (userInput === "hello are you entering or leaving I'm entering"){
-				trafficQueryFinal = "entering";
-			}
-			else if (userInput === "hello are you entering or leaving I'm leaving"){
-				trafficQueryFinal = "leaving";
-			}
-			else if(answeringQuery == true){
 				trafficQueryFinal = "entering";
 			}
 			else if(userInput === "you entering or leaving entering"){
@@ -266,6 +274,9 @@ function send() {
 			}
 			else if (userInput === "are you entering or leaving leaving"){
 				trafficQueryFinal = "leaving";
+			}
+			else if(answeringQuery == true){
+				trafficQueryFinal = "entering";
 			}
 			else if(duckTrafficQuery == true){
 				trafficQueryFinal = "entering or leaving";
@@ -281,6 +292,9 @@ function send() {
 				trafficQueryFinal = "entering";
 				// trafficQuery = "entering";
 				// aiListen = false;xw
+			}else if (userInput.includes("are you entering or leaving")){
+				console.log("userInput includes are you entering or leaving")
+				trafficQueryFinal = "are you entering or leaving?"
 			}
 
 			switch(trafficQueryFinal){
@@ -291,17 +305,17 @@ function send() {
 				case "you entering or leaving":
 
 				case "leaving":
-					trafficQuery = "leaving";
-					aiListen = false;
+				trafficQuery = "leaving";
+				aiListen = false;
 				break;
 
 				case "entering":
-					trafficQuery = "entering";
-					aiListen = false;
+				trafficQuery = "entering";
+				aiListen = false;
 				break;
 
 				default:
-					console.log("NO CASE FOUND")
+				console.log("NO CASE FOUND")
 
 			}
 
@@ -327,13 +341,13 @@ function send() {
 				console.log(userLog);
 				$http.post('/home',userLog);
 
-		    }
+			}
 		},
 		error: function() {
 			setResponse("Internal Server Error");
 		}
 	});
-	setResponse("Thinking...");
+setResponse("Thinking...");
 }
 
 function setResponse(val) {
@@ -341,11 +355,6 @@ function setResponse(val) {
 }
 
 // Init Conversation
-
-
-	
-
-
 
 });
 // Listens 24/7
