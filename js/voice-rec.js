@@ -46,6 +46,7 @@ if (minutes<10){
 var userTime = hour+":"+minutes+" "+meridian;
 console.log(userTime);
 var duckActivate = false;
+var userName;
 myApp.controller('voiceRec', ['$scope','$http','$rootScope', function($scope, $http,$rootScope) {
 
 //Recog JS
@@ -98,13 +99,9 @@ $(document).ready(function() {
 	    // PRIORITY IS DETECTING HEY DUCK IN THE BEGINNING. 
 	    var initDuck1 = text.includes("Hey Duck");
 	    var initDuck2 = text.includes("hey duck");
-	    var initDuck3 = text.includes("a duck");
 	    var initDuck4 = text.includes("heyduck");
 	    var initDuck5 = text.includes("hajduck");
-	    var initDuck6 = text.includes("Hey Doug");
-	    var initDuck8 = text.includes("hey Doug");
 	    var initDuck9 = text.includes("hey Doc");
-	    var initDuck10 = text.includes("haydock");
 	    var initDuck11 = text.includes("hey dukh");
 
 	    if (initDuck1 == true){
@@ -112,10 +109,6 @@ $(document).ready(function() {
 	    	duckActivate = true;
 	    	console.log("duckactivate = "+duckActivate);
 	    }else if (initDuck2 == true){
-	    	console.log("text = "+text);
-	    	duckActivate = true;
-	    	console.log("duckactivate = "+duckActivate);
-	    }else if (initDuck3 == true){
 	    	console.log("text = "+text);
 	    	duckActivate = true;
 	    	console.log("duckactivate = "+duckActivate);
@@ -127,27 +120,21 @@ $(document).ready(function() {
 	    	console.log("text = "+text);
 	    	duckActivate = true;
 	    	console.log("duckactivate = "+duckActivate);
-	    }else if(initDuck6 == true){
-	    	console.log("text = "+text);
-	    	duckActivate = true;
-	    	console.log("duckactivate = "+duckActivate);	
-	    }else if(initDuck8 == true){
-	    	console.log("text = "+text);
-	    	duckActivate = true;
-	    	console.log("duckactivate = "+duckActivate);	
 	    }else if(initDuck9 == true){
 	    	console.log("text = "+text);
 	    	duckActivate = true;
 	    	console.log("duckactivate = "+duckActivate);	
-	    }else if(initDuck10 == true){
-	    	console.log("text = "+text);
-	    	duckActivate = true;
-	    	console.log("duckactivate = "+duckActivate);	    	
 	    }else if(initDuck11 == true){
 	    	console.log("text = "+text);
 	    	duckActivate = true;
 	    	console.log("duckactivate = "+duckActivate);	    	
 	    }
+
+	    //ai picks up own voice <- this stops that from happening
+	    // var aiPickEL = "hey "+userName+" are you entering or leaving";
+	    // if(text === aiPickEL){
+	    // 	text = "aejknrfirneuiaebfiuoavbeoriyeawvoifvieuafeiuvfiaeupfveugfuoeagfpuaigfourghourehgouragourahg";
+	    // }
 
 	    setInput(text);
 	    userInput = text;
@@ -200,7 +187,7 @@ function updateRec() {
 	$("#rec").text(recognition ? "Stop" : "Speak");
 }
 
-var userName ;
+
 function send() {
 	var text = $("#input").val();
 	$.ajax({
@@ -237,7 +224,6 @@ function send() {
 			duckResponse.lang='en-GR';
 			window.speechSynthesis.speak(duckResponse);
 			console.log("user input =",userInput);
-			
 			//Pop Name
 			// var userIntro = "name is" || "i am";
 			// var name = userName.split(userIntro).pop();
