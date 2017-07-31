@@ -195,6 +195,7 @@ function setInput(text) {
 
 }
 
+ 
 function updateRec() {
 	$("#rec").text(recognition ? "Stop" : "Speak");
 }
@@ -250,7 +251,6 @@ function send() {
 			var trafficQuery;
 			var trafficQueryFinal;
 			
-			// May be the cause for latency issues
 			if (userInput.includes("I'm entering")){
 				trafficQueryFinal = "entering";
 			}
